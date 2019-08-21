@@ -1,7 +1,7 @@
 # h1b2019database
 A python script that load 2019 h1b petition data into local sqlite database
 
-## requirement:
+## requirement
 1. python 3
 2. python module sqlalchemy
 
@@ -18,4 +18,11 @@ sqlite3 h1b_data.db
 python establish2019H1BDatabas.py H-1B_Disclosure_Data_FY2019.csv h1b_data.db
 ```
 
- 
+## check the data
+### top high salary h1b employers
+```
+select count(*), EMPLOYER_NAME from h1bdata_2019
+where PREVAILING_WAGE > 123000
+  and JOB_TITLE like "%Engineer%"
+GROUP BY EMPLOYER_NAME ORDER BY COUNT(*) DESC LIMIT 100;
+```
