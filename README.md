@@ -19,7 +19,7 @@ python establish2019H1BDatabas.py H-1B_Disclosure_Data_FY2019.csv h1b_data.db
 ```
 
 ## check the data
-### top high salary h1b employers
+### high salary h1b employers
 ```
    SELECT count(*), EMPLOYER_NAME FROM h1bdata_2019 
     WHERE PREVAILING_WAGE > 123000 
