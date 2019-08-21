@@ -35,3 +35,4 @@ python establish2019H1BDatabas.py H-1B_Disclosure_Data_FY2019.csv h1b_data.db
   WHERE EMPLOYER_NAME LIKE "%Google%" 
     AND WORKSITE_CITY = 'Cambridge' LIMIT 100;
 ```
+![H1B_Google_Cambridge.png](/pics/H1B_Google_Cambridge.png)
