@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
 
 
-def createRawTable(fileName="H-1B_Disclosure_Data_FY2019.csv", dbName='h1b_data'):
+def createRawTable(fileName="H-1B_Disclosure_Data_FY2019.csv", dbName='h1b_data.db'):
     with open(fileName) as file:
         csvReader = csv.DictReader(file)
         headers = csvReader.fieldnames
@@ -19,7 +19,7 @@ def createRawTable(fileName="H-1B_Disclosure_Data_FY2019.csv", dbName='h1b_data'
                 createTableSQL += ", "
             else:
                 createTableSQL += ");"
-    db_connect = create_engine('sqlite:///{}.db'.format(dbName))
+    db_connect = create_engine('sqlite:///{}'.format(dbName))
     conn = db_connect.connect()
     try:
         query = conn.execute(createTableSQL)
@@ -28,8 +28,8 @@ def createRawTable(fileName="H-1B_Disclosure_Data_FY2019.csv", dbName='h1b_data'
         print("SQL error: {}".format(e))
         raise SQLAlchemyError
 
-def insertDataIntoRawTabe(fileName="H-1B_Disclosure_Data_FY2019.csv", dbName='h1b_data'):
-    db_connect = create_engine('sqlite:///{}.db'.format(dbName))
+def insertDataIntoRawTabe(fileName="H-1B_Disclosure_Data_FY2019.csv", dbName='h1b_data.db'):
+    db_connect = create_engine('sqlite:///{}'.format(dbName))
     conn = db_connect.connect()
     with open(fileName) as file:
         csvReader = csv.DictReader(file)
@@ -64,8 +64,8 @@ def moneyParser(moneyString):
     moneyString = moneyString.replace(',', '')
     return moneyString
 
-def showHeader(dbName='h1b_data'):
-    engine = create_engine('sqlite:///{}.db'.format(dbName))
+def showHeader(dbName='h1b_data.db'):
+    engine = create_engine('sqlite:///{}'.format(dbName))
     connection = engine.connect()
     metadata = sqlalchemy.MetaData()
     jobs = sqlalchemy.Table('h1bdata_2019', metadata, autoload=True, autoload_with=engine)
@@ -88,7 +88,7 @@ if __name__ == '__main__':
         dbName = sys.argv[2]
     else:
         fileName = 'H-1B_Disclosure_Data_FY2019.csv'
-        dbName = 'h1b_data'
+        dbName = 'h1b_data.db'
     print(fileName, dbName)
     try:
         createRawTable(fileName, dbName)
