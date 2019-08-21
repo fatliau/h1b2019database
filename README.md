@@ -26,3 +26,4 @@ where PREVAILING_WAGE > 123000
   and JOB_TITLE like "%Engineer%"
 GROUP BY EMPLOYER_NAME ORDER BY COUNT(*) DESC LIMIT 100;
 ```
+![pic1](/pics/H1B_TopHighSalaryEmployers.png)
