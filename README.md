@@ -21,9 +21,9 @@ python establish2019H1BDatabas.py H-1B_Disclosure_Data_FY2019.csv h1b_data.db
 ## check the data
 ### top high salary h1b employers
 ```
-select count(*), EMPLOYER_NAME from h1bdata_2019
-where PREVAILING_WAGE > 123000
-  and JOB_TITLE like "%Engineer%"
-GROUP BY EMPLOYER_NAME ORDER BY COUNT(*) DESC LIMIT 100;
+   SELECT count(*), EMPLOYER_NAME FROM h1bdata_2019 
+    WHERE PREVAILING_WAGE > 123000 
+      AND JOB_TITLE LIKE "%Engineer%" 
+ GROUP BY EMPLOYER_NAME ORDER BY COUNT(*) DESC LIMIT 100;
 ```
 ![H1B_TopHighSalaryEmployers.png](/pics/H1B_TopHighSalaryEmployers.png)
