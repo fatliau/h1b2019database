@@ -28,9 +28,10 @@ python establish2019H1BDatabas.py H-1B_Disclosure_Data_FY2019.csv h1b_data.db
 ```
 ![H1B_TopHighSalaryEmployers.png](/pics/H1B_TopHighSalaryEmployers.png)
 
-## check data from a certain employer
+### check data from a certain employer
 ```
  SELECT PREVAILING_WAGE, EMPLOYER_NAME, JOB_TITLE, WORKSITE_CITY, WORKSITE_STATE
    FROM h1bdata_2019
-  WHERE EMPLOYER_NAME LIKE "%Google%";
+  WHERE EMPLOYER_NAME LIKE "%Google%" 
+    AND WORKSITE_CITY = 'Cambridge' LIMIT 100;
 ```
