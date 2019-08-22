@@ -44,4 +44,5 @@ python calculateEmployerSalaryStatisitcs.py 2000 h1b_data.db
 ### top quartile salary emploer list
 ```
 SELECT * FROM employer_salary_stats ORDER BY QUARTILE_PAY DESC LIMIT 100;
+```
 ![H1B_TopQuartileSalaryEmployer.png](/pics/H1B_TopQuartileSalaryEmployer.png)
