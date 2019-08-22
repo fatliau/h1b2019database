@@ -17,7 +17,7 @@ sqlite3 h1b_data.db
 # python establish2019H1BDatabas.py <csv file name> <db name>
 python establish2019H1BDatabas.py H-1B_Disclosure_Data_FY2019.csv h1b_data.db
 ```
-5. run the salary analytics script
+5. run the salary analytics(medium/quartile) script
 ```
 # python calculateEmployerSalaryStatisitcs.py <number of employers to be calculated> <db name>
 python calculateEmployerSalaryStatisitcs.py 2000 h1b_data.db
