@@ -17,6 +17,11 @@ sqlite3 h1b_data.db
 # python establish2019H1BDatabas.py <csv file name> <db name>
 python establish2019H1BDatabas.py H-1B_Disclosure_Data_FY2019.csv h1b_data.db
 ```
+5. run the salary analytics script
+```
+# python calculateEmployerSalaryStatisitcs.py <number of employers to be calculated> <db name>
+python calculateEmployerSalaryStatisitcs.py 2000 h1b_data.db
+```
 
 ## check the data
 ### high salary h1b employers
@@ -36,3 +41,7 @@ python establish2019H1BDatabas.py H-1B_Disclosure_Data_FY2019.csv h1b_data.db
     AND WORKSITE_CITY = 'Cambridge' LIMIT 100;
 ```
 ![H1B_Google_Cambridge.png](/pics/H1B_Google_Cambridge.png)
+### top quartile salary emploer list
+```
+SELECT * FROM employer_salary_stats ORDER BY QUARTILE_PAY DESC LIMIT 100;
+![H1B_TopQuartileSalaryEmployer.png](/pics/H1B_TopQuartileSalaryEmployer.png)
