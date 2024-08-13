@@ -2,6 +2,7 @@ import heapq
 import sys
 import sqlalchemy
 from sqlalchemy import create_engine
+from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
 
@@ -14,7 +15,7 @@ def getEmployersList(limit, dbName):
     db_connect = create_engine('sqlite:///{}'.format(dbName))
     conn = db_connect.connect()
     try:
-        query = conn.execute(querySQL)
+        query = conn.execute(text(querySQL))
         for row in query.fetchall():
             employers.append(row[1])
     except SQLAlchemyError as e:
@@ -30,7 +31,7 @@ def getMedianSalary(employerName, dbName):
     conn = db_connect.connect()
     H = []
     try:
-        query = conn.execute(querySQL)
+        query = conn.execute(text(querySQL))
         for row in query.fetchall():
             heapq.heappush(H, row[0])
     except SQLAlchemyError as e:
@@ -52,10 +53,11 @@ def createEmployerSalaryStatTable(dbName='h1b_data.db'):
     db_connect = create_engine('sqlite:///{}'.format(dbName))
     conn = db_connect.connect()
     try:
-        query = conn.execute(createSQL)
+        query = conn.execute(text(createSQL))
         print("table employer_salary_stats created")
     except SQLAlchemyError as e:
         print("SQL error: {}".format(e))
+    conn.commit()
 
 def calculateEmployerSalaryStatAndInsertTable(employers, dbName):
     size_allEmployers = len(employers)
@@ -66,10 +68,11 @@ def calculateEmployerSalaryStatAndInsertTable(employers, dbName):
         db_connect = create_engine('sqlite:///{}'.format(dbName))
         conn = db_connect.connect()
         try:
-            query = conn.execute(insertSQL)
+            query = conn.execute(text(insertSQL))
             print("insert data into employer_salary_stats {}/{}".format(i+1, size_allEmployers))
         except SQLAlchemyError as e:
             print("SQL error: {}".format(e))
+        conn.commit()
 
 
 if __name__ == '__main__':
