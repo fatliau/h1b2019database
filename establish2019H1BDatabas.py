@@ -2,6 +2,7 @@ import csv
 import sys
 import sqlalchemy
 from sqlalchemy import create_engine
+from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
 
@@ -22,8 +23,9 @@ def createRawTable(fileName="H-1B_Disclosure_Data_FY2019.csv", dbName='h1b_data.
     db_connect = create_engine('sqlite:///{}'.format(dbName))
     conn = db_connect.connect()
     try:
-        query = conn.execute(createTableSQL)
+        query = conn.execute(text(createTableSQL))
         print("created table: h1bdata_2019")
+        conn.commit()
     except SQLAlchemyError as e:
         print("SQL error: {}".format(e))
         raise SQLAlchemyError
@@ -47,17 +49,21 @@ def insertDataIntoRawTabe(fileName="H-1B_Disclosure_Data_FY2019.csv", dbName='h1
                     if key == "PREVAILING_WAGE":
                         valueSQL += moneyParser(row[key]) + ","
                     else:
-                        valueSQL += "'" + escapeHelper(row[key]) + "'" + ","
+                        valueSQL += "'" + valueHelper(row[key]) + "'" + ","
                 else:
-                    valueSQL += "'" + escapeHelper(row[key]) + "'" + ");"
+                    valueSQL += "'" + valueHelper(row[key]) + "'" + ");"
             insertSQL += "VALUES " + valueSQL
             try:
-                query = conn.execute(insertSQL)
+                query = conn.execute(text(insertSQL))
             except SQLAlchemyError as e:
                 print("SQL error: {}".format(e))
+        conn.commit()
 
 def escapeHelper(string):
     return string.replace("'", "`")
+
+def valueHelper(string):
+    return escapeHelper(string).replace(":", " ")
 
 def moneyParser(moneyString):
     moneyString = moneyString.replace('$', '')
